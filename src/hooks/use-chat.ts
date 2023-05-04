@@ -71,6 +71,7 @@ export function useChat() {
       method: "POST",
       signal: abortController.signal,
       onclose: () => {
+        console.log("onClose")
         setState("idle");
       },
       onmessage: (event) => {
@@ -125,7 +126,7 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-
+              console.log("Confirming")
               setState("confirming");
               setCurrentChat(null);
             }
