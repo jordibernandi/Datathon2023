@@ -76,6 +76,7 @@ export function useChat() {
       //   setState("idle");
       // },
       onmessage: (event) => {
+        console.log(sendMessage);
         setCurrentChat("...");
         if (state === "idle") {
           switch (event.event) {
@@ -188,6 +189,7 @@ export function useChat() {
               ]);
               setState("idle");
               setCurrentChat(null);
+              console.log("KESINI")
             }
             case "open": {
               // The stream has opened and we should recieve

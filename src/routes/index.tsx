@@ -44,7 +44,7 @@ export default function Index() {
       console.log(currentChat);
     } else if (state === "confirming") {
       const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
-      sendMessage("Output 'true' or 'false', is there any symptom in this text: " + latestUserChat.content, chatHistory);
+      sendMessage("Output 'true' if there is any symptom mentioned in this text: " + latestUserChat.content, chatHistory);
     } else if (state === "extracting") {
       const secondLatestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-2, -1).pop();
       sendMessage("Extract the symptoms as a list tag in the following text: " + secondLatestUserChat.content, chatHistory);
