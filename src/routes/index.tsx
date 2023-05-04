@@ -45,10 +45,10 @@ export default function Index() {
       sendMessage("Output 'true' or 'false', is there any symptom in this text: " + latestUserChat.content, chatHistory);
     } else if (state === "extracting") {
       const secondLatestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-2, -1).pop();
-      sendMessage("Extract the symptoms as a list in the following text: " + secondLatestUserChat.content, chatHistory);
+      sendMessage("Extract the symptoms as a list tag in the following text: " + secondLatestUserChat.content, chatHistory);
     } else if (state === "asking") {
       const latestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[0];
-      sendMessage("Rephrase this question in the formal way: " + latestAssistantChat + " Could you please describe more about your symptoms?", chatHistory);
+      sendMessage("Rephrase this question in the formal way: " + latestAssistantChat.content + " Could you please describe more about your symptoms?", chatHistory);
     }
     console.log("STATE", state)
   }, [state]);
