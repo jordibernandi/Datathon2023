@@ -44,25 +44,25 @@ export default function Index() {
 
   return (
     <App title="Create your own AI chat bot">
-      <main className="bg-white md:rounded-lg md:shadow-md p-6 w-full h-full flex flex-col">
-        <section className="overflow-y-auto flex-grow mb-4 pb-8">
+      <main className="flex flex-col w-full h-full p-6 bg-white md:rounded-lg md:shadow-md">
+        <section className="flex-grow pb-8 mb-4 overflow-y-auto">
           <div className="flex flex-col space-y-4">
             {chatHistory.length === 0 ? (
               <>
                 <Welcome />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {appConfig.samplePhrases.map((phrase) => (
                     <button
                       key={phrase}
                       onClick={() => sendMessage(phrase, chatHistory)}
-                      className="bg-gray-100 border-gray-300 border-2 rounded-lg p-4"
+                      className="p-4 bg-gray-100 border-2 border-gray-300 rounded-lg"
                     >
                       {phrase}
                     </button>
                   ))}
                 </div>
                 <div className="flex justify-center">
-                  <p className="text-sm text-gray-500 mt-5">
+                  <p className="mt-5 text-sm text-gray-500">
                     Built with 🤖{" "}
                     <a
                       className="underline"
@@ -71,7 +71,7 @@ export default function Index() {
                       Daneel
                     </a>
                   </p>
-                </div>
+                </div> */}
               </>
             ) : (
               chatHistory.map((chat, i) => (
@@ -87,14 +87,14 @@ export default function Index() {
         <div className="flex items-center justify-center h-20">
           {state === "idle" ? null : (
             <button
-              className="bg-gray-100 text-gray-900 py-2 px-4 my-8"
+              className="px-4 py-2 my-8 text-gray-900 bg-gray-100"
               onClick={cancel}
             >
               Stop generating
             </button>
           )}
         </div>
-        <section className="bg-gray-100 rounded-lg p-2">
+        <section className="p-2 bg-gray-100 rounded-lg">
           <form
             className="flex"
             onSubmit={(e) => {
@@ -105,7 +105,7 @@ export default function Index() {
           >
             {chatHistory.length > 1 ? (
               <button
-                className="bg-gray-100 text-gray-600 py-2 px-4 rounded-l-lg"
+                className="px-4 py-2 text-gray-600 bg-gray-100 rounded-l-lg"
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
@@ -119,7 +119,7 @@ export default function Index() {
             <input
               type="text"
               ref={inputRef}
-              className="w-full rounded-l-lg p-2 outline-none"
+              className="w-full p-2 rounded-l-lg outline-none"
               placeholder={state == "idle" ? "Type your message..." : "..."}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -127,7 +127,7 @@ export default function Index() {
             />
             {state === "idle" ? (
               <button
-                className="bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
+                className="px-4 py-2 font-bold text-white bg-blue-700 rounded-r-lg"
                 type="submit"
               >
                 Send
