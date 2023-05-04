@@ -6,6 +6,7 @@ const API_PATH = "/api/chat";
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
+  show: boolean;
 }
 
 /**
@@ -14,7 +15,7 @@ interface ChatMessage {
 export function useChat() {
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [state, setState] = useState<"idle" | "waiting" | "loading">("idle");
+  const [state, setState] = useState<"idle" | "waiting" | "extracting" | "confirming" | "asking" | "typing">("idle");
 
   // Lets us cancel the stream
   const abortController = useMemo(() => new AbortController(), []);
@@ -28,7 +29,7 @@ export function useChat() {
     if (currentChat) {
       const newHistory = [
         ...chatHistory,
-        { role: "user", content: currentChat } as const,
+        { role: "user", content: currentChat, show: true } as const,
       ];
 
       setChatHistory(newHistory);
@@ -49,11 +50,10 @@ export function useChat() {
    * Sends a new message to the AI function and streams the response
    */
   const sendMessage = (message: string, chatHistory: Array<ChatMessage>) => {
-    setState("waiting");
     let chatContent = "";
     const newHistory = [
       ...chatHistory,
-      { role: "user", content: message } as const,
+      { role: "user", content: message, show: state === "idle" } as const,
     ];
 
     setChatHistory(newHistory);
@@ -74,40 +74,168 @@ export function useChat() {
         setState("idle");
       },
       onmessage: (event) => {
-        switch (event.event) {
-          case "delta": {
-            // This is a new word or chunk from the AI
-            setState("loading");
-            const message = JSON.parse(event.data);
-            if (message?.role === "assistant") {
-              chatContent = "";
-              return;
+        setCurrentChat("...");
+        if (state === "idle") {
+          switch (event.event) {
+            case "delta": {
+              // This is a new word or chunk from the AI
+              const message = JSON.parse(event.data);
+              if (message?.role === "assistant") {
+                chatContent = "";
+                return;
+              }
+              if (message.content) {
+                chatContent += message.content;
+              }
+              break;
             }
-            if (message.content) {
-              chatContent += message.content;
-              setCurrentChat(chatContent);
+            case "done": {
+              // When it's done, we add the message to the history
+              // and reset the current chat
+              setChatHistory((curr) => [
+                ...curr,
+                { role: "assistant", content: chatContent, show: false } as const,
+              ]);
+
+              setState("extracting");
+              setCurrentChat(null);
             }
-            break;
+            default:
+              break;
           }
-          case "open": {
-            // The stream has opened and we should recieve
-            // a delta event soon. This is normally almost instant.
-            setCurrentChat("...");
-            break;
-          }
-          case "done": {
-            // When it's done, we add the message to the history
-            // and reset the current chat
-            setChatHistory((curr) => [
-              ...curr,
-              { role: "assistant", content: chatContent } as const,
-            ]);
-            setCurrentChat(null);
-            setState("idle");
-          }
-          default:
-            break;
         }
+        else if (state === "extracting") {
+          switch (event.event) {
+            case "delta": {
+              // This is a new word or chunk from the AI
+              const message = JSON.parse(event.data);
+              if (message?.role === "assistant") {
+                chatContent = "";
+                return;
+              }
+              if (message.content) {
+                chatContent += message.content;
+              }
+              break;
+            }
+            case "done": {
+              // When it's done, we add the message to the history
+              // and reset the current chat
+              setChatHistory((curr) => [
+                ...curr,
+                { role: "assistant", content: chatContent, show: false } as const,
+              ]);
+
+              setState("confirming");
+              setCurrentChat(null);
+            }
+            default:
+              break;
+          }
+        } else if (state === "confirming") {
+          switch (event.event) {
+            case "delta": {
+              // This is a new word or chunk from the AI
+              const message = JSON.parse(event.data);
+              if (message?.role === "assistant") {
+                chatContent = "";
+                return;
+              }
+              if (message.content) {
+                chatContent += message.content;
+              }
+              break;
+            }
+            case "done": {
+              // When it's done, we add the message to the history
+              // and reset the current chat
+              setChatHistory((curr) => [
+                ...curr,
+                { role: "assistant", content: chatContent, show: false } as const,
+              ]);
+
+              if (chatContent === "true") {
+                setState("typing");
+              } else {
+                setState("asking");
+              }
+              setCurrentChat(null);
+            }
+            default:
+              break;
+          }
+        } else if (state === "asking") {
+          switch (event.event) {
+            case "delta": {
+              // This is a new word or chunk from the AI
+              const message = JSON.parse(event.data);
+              if (message?.role === "assistant") {
+                chatContent = "";
+                return;
+              }
+              if (message.content) {
+                chatContent += message.content;
+                setCurrentChat(chatContent);
+              }
+              break;
+            }
+            case "done": {
+              // When it's done, we add the message to the history
+              // and reset the current chat
+              setChatHistory((curr) => [
+                ...curr,
+                { role: "assistant", content: chatContent, show: true } as const,
+              ]);
+
+              setState("idle");
+              setCurrentChat(null);
+            }
+            case "open": {
+              // The stream has opened and we should recieve
+              // a delta event soon. This is normally almost instant.
+              setCurrentChat("...");
+              break;
+            }
+            default:
+              break;
+          }
+        }
+        else if (state === "typing") {
+          switch (event.event) {
+            case "delta": {
+              // This is a new word or chunk from the AI
+              const message = JSON.parse(event.data);
+              if (message?.role === "assistant") {
+                chatContent = "";
+                return;
+              }
+              if (message.content) {
+                chatContent += message.content;
+                setCurrentChat(chatContent);
+              }
+              break;
+            }
+            case "open": {
+              // The stream has opened and we should recieve
+              // a delta event soon. This is normally almost instant.
+              setCurrentChat("...");
+              break;
+            }
+            case "done": {
+              // When it's done, we add the message to the history
+              // and reset the current chat
+              setChatHistory((curr) => [
+                ...curr,
+                { role: "assistant", content: chatContent, show: true } as const,
+              ]);
+              setCurrentChat(null);
+              setState("idle");
+            }
+            default:
+              break;
+          }
+        }
+
       },
     });
   };
