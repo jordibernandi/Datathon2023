@@ -76,7 +76,7 @@ export function useChat() {
       //   setState("idle");
       // },
       onmessage: (event) => {
-        console.log(sendMessage);
+        console.log("sendMessage");
         setCurrentChat("...");
         if (state === "idle") {
           switch (event.event) {
@@ -99,9 +99,8 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-
-              setState("confirming");
               setCurrentChat(null);
+              setState("confirming");
             }
             default:
               break;
@@ -127,13 +126,12 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-
-              if (chatContent.includes("true")) {
+              setCurrentChat(null);
+              if (chatContent.toLowerCase().includes("true")) {
                 setState("extracting");
               } else {
                 setState("asking");
               }
-              setCurrentChat(null);
             }
             default:
               break;
@@ -159,8 +157,8 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-              setState("typing");
               setCurrentChat(null);
+              setState("typing");
             }
             default:
               break;
@@ -187,9 +185,9 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
-              setState("idle");
               setCurrentChat(null);
-              console.log("KESINI")
+              setState("idle");
+              console.log("DONE")
             }
             case "open": {
               // The stream has opened and we should recieve
@@ -228,8 +226,8 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
-              setState("idle");
               setCurrentChat(null);
+              setState("idle");
             }
             default:
               break;
