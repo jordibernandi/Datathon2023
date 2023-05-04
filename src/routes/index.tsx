@@ -42,7 +42,7 @@ export default function Index() {
     focusInput();
     if (state === "confirming") {
       const latestAssistantChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
-      sendMessage("Extract the symptoms if there is any otherwise show 'false' without dot, in the following text: " + latestAssistantChat.content, chatHistory);
+      sendMessage("Extract the symptoms if there is any, otherwise show output 'false' without dot for the following text: " + latestAssistantChat.content, chatHistory);
     } else if (state === "asking") {
       sendMessage("Rephrase this question in the formal way: Could you please describe more about your symptoms?", chatHistory);
     }
