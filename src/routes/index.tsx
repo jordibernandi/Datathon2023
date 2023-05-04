@@ -40,12 +40,9 @@ export default function Index() {
 
   useEffect(() => {
     focusInput();
-    if (state === "extracting") {
-      const latestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[0];
-      sendMessage("Extract the symptoms if there is any, in the following text: " + latestAssistantChat.content, chatHistory);
-    } else if (state === "confirming") {
-      const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-2, -1).pop();
-      sendMessage("Output 'true' or 'false' without dot, is there any symptom in this text: " + secondLatestAssistantChat.content, chatHistory);
+    if (state === "confirming") {
+      const latestAssistantChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
+      sendMessage("Extract the symptoms if there is any otherwise show 'false' without dot, in the following text: " + latestAssistantChat.content, chatHistory);
     } else if (state === "asking") {
       sendMessage("Rephrase this question in the formal way: Could you please describe more about your symptoms?", chatHistory);
     }

@@ -15,7 +15,7 @@ interface ChatMessage {
 export function useChat() {
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [state, setState] = useState<"idle" | "waiting" | "extracting" | "confirming" | "asking" | "typing">("idle");
+  const [state, setState] = useState<"idle" | "waiting" | "confirming" | "asking" | "typing">("idle");
 
   // Lets us cancel the stream
   const abortController = useMemo(() => new AbortController(), []);
@@ -98,42 +98,14 @@ export function useChat() {
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
 
-              setState("extracting");
-              setCurrentChat(null);
-            }
-            default:
-              break;
-          }
-        }
-        else if (state === "extracting") {
-          switch (event.event) {
-            case "delta": {
-              // This is a new word or chunk from the AI
-              const message = JSON.parse(event.data);
-              if (message?.role === "assistant") {
-                chatContent = "";
-                return;
-              }
-              if (message.content) {
-                chatContent += message.content;
-              }
-              break;
-            }
-            case "done": {
-              // When it's done, we add the message to the history
-              // and reset the current chat
-              setChatHistory((curr) => [
-                ...curr,
-                { role: "assistant", content: chatContent, show: false } as const,
-              ]);
-              console.log("Confirming")
               setState("confirming");
               setCurrentChat(null);
             }
             default:
               break;
           }
-        } else if (state === "confirming") {
+        }
+        else if (state === "confirming") {
           switch (event.event) {
             case "delta": {
               // This is a new word or chunk from the AI
@@ -155,10 +127,10 @@ export function useChat() {
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
 
-              if (chatContent === "true") {
-                setState("typing");
-              } else {
+              if (chatContent === "false") {
                 setState("asking");
+              } else {
+                setState("typing");
               }
               setCurrentChat(null);
             }
