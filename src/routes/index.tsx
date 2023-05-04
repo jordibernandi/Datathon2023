@@ -42,13 +42,14 @@ export default function Index() {
     focusInput();
     if (state === "extracting") {
       const latestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[0];
-      sendMessage("Extract the relevant information for symptom detection in the following text: " + latestAssistantChat.content, chatHistory);
+      sendMessage("Extract the relevant information for symptom detection in the following text: '" + latestAssistantChat.content + "'", chatHistory);
     } else if (state === "confirming") {
       const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[1];
-      sendMessage("Output 'true' or 'false' without dot, is there any relevant information for symptom detection in this text: " + secondLatestAssistantChat.content, chatHistory);
+      sendMessage("Output 'true' or 'false' without dot, is there any relevant information for symptom detection in this text: '" + secondLatestAssistantChat.content + "'", chatHistory);
     } else if (state === "asking") {
       sendMessage("Rephrase this question in the formal way: Could you please describe more about your symptoms?", chatHistory);
     }
+    console.log("STATE", state)
   }, [state]);
 
   return (
