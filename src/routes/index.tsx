@@ -40,7 +40,9 @@ export default function Index() {
 
   useEffect(() => {
     focusInput();
-    if (state === "confirming") {
+    if (state === "idle") {
+      console.log(currentChat);
+    } else if (state === "confirming") {
       const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
       sendMessage("Output 'true' or 'false', is there any symptom in this text: " + latestUserChat.content, chatHistory);
     } else if (state === "extracting") {
@@ -48,7 +50,7 @@ export default function Index() {
       sendMessage("Extract the symptoms as a list tag in the following text: " + secondLatestUserChat.content, chatHistory);
     } else if (state === "asking") {
       const latestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[0];
-      sendMessage("Rephrase this question in the formal way: " + latestAssistantChat.content + " Could you please describe more about your symptoms?", chatHistory);
+      sendMessage("Rephrase this question in the formal way: Could you please describe more about your symptoms?", chatHistory);
     }
     console.log("STATE", state)
   }, [state]);

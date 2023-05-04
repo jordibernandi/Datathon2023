@@ -44,6 +44,7 @@ export function useChat() {
   function clear() {
     console.log("clear");
     setChatHistory([]);
+    setCurrentChat(null);
   }
 
   /**
@@ -185,7 +186,6 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
-
               setState("idle");
               setCurrentChat(null);
             }
@@ -226,8 +226,8 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
-              setCurrentChat(null);
               setState("idle");
+              setCurrentChat(null);
             }
             default:
               break;
