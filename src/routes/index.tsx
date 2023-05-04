@@ -42,7 +42,10 @@ export default function Index() {
     focusInput();
     if (state === "confirming") {
       const latestAssistantChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
-      sendMessage("Extract the symptoms if there is any, otherwise show output 'false' without dot for the following text: " + latestAssistantChat.content, chatHistory);
+      sendMessage("Output 'true' or 'false', is there any symptom in this text: " + latestAssistantChat.content, chatHistory);
+    } else if (state === "extracting") {
+      const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "user").slice(-2, -1).pop();
+      sendMessage("Extract the symptoms as a list in the following text: " + secondLatestAssistantChat.content, chatHistory);
     } else if (state === "asking") {
       sendMessage("Rephrase this question in the formal way: Could you please describe more about your symptoms?", chatHistory);
     }
