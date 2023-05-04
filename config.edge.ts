@@ -1,6 +1,6 @@
 import type { AppConfig } from "./lib/edge/types.ts";
 
-import { prompt } from "./prompts/movie-critic.ts";
+import { prompt } from "./prompts/health-expert.ts";
 // import { prompt } from "./prompts/tour-guide.ts";
 
 export const appConfig: AppConfig = {
