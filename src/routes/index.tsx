@@ -84,9 +84,15 @@ export default function Index() {
                 <Welcome />
               </>
             ) : (
-              chatHistory.map((chat, i) => (
-                <ChatMessage key={i} message={chat} />
-              ))
+              chatHistory.map((chat, i) => {
+                if (chat.show) {
+                  return (
+                    <ChatMessage key={i} message={chat} />
+                  )
+                } else {
+                  return <></>
+                }
+              })
             )}
 
             {currentChat ? <ChatMessage message={currentMessage} /> : null}
