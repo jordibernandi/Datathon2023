@@ -83,7 +83,7 @@ export default function Index() {
             'Content-type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify(secondAssistantChat.content + " " + latestAssistantChat.content)
+          body: JSON.stringify(secondAssistantChat.content + "@@" + latestAssistantChat.content)
         }).then(res => {
           if (res.ok) {
             return res.json()
@@ -104,7 +104,7 @@ export default function Index() {
           <div className="flex flex-col space-y-4">
             {chatHistory.length === 0 ? (
               <>
-                <div className="w-40 text-center">{View}</div>
+                <center><div className="text-center w-96">{View}</div></center>
                 <Welcome />
               </>
             ) : (
