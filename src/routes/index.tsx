@@ -54,7 +54,7 @@ export default function Index() {
       sendMessage(message, chatHistory);
     } else if (state === "asking") {
       const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-2, -1).pop();
-      const message = "Rephrase this question in the formal way: " + secondLatestAssistantChat + " Could you please describe more about your symptoms?";
+      const message = "Rephrase this question in the formal way: " + secondLatestAssistantChat.content + " Could you please describe more about your symptoms?";
       sendMessage(message, chatHistory);
     } else if (state === "typing") {
       fetch("http://127.0.0.1:5000/receiver",

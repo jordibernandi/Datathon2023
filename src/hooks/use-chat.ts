@@ -184,7 +184,7 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
-              // setCurrentChat(null);
+              setCurrentChat(null);
               setState("idle");
             }
             case "open": {
