@@ -10,7 +10,7 @@ export const appConfig: AppConfig = {
 
   // The maximum number of message in the history to send to the API
   // You should also set this in the config.browser.ts file.
-  historyLength: 8,
+  historyLength: 10,
 
   // The maximum length in characters of each message sent to the API
   // You should also set this in the config.browser.ts file.

@@ -50,7 +50,7 @@ export function getChatStream(
 
 export function sanitizeMessages(
   messages: ChatCompletionOptions["messages"],
-  historyLength = 8,
+  historyLength = 10,
   maxMessageLength = 1000
 ): ChatCompletionOptions["messages"] {
   return messages.slice(-historyLength).map(({ content, role }) => {

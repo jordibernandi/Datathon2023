@@ -49,7 +49,7 @@ export default function Index() {
       sendMessage(message, chatHistory);
     } else if (state === "extracting") {
       const secondLatestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-2, -1).pop();
-      const message = "Extract the symptoms as a list tag in the following text: " + secondLatestUserChat.content;
+      const message = "Extract the symptoms as a python list in the following text: " + secondLatestUserChat.content;
       sendMessage(message, chatHistory);
     } else if (state === "asking") {
       const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-2, -1).pop();
