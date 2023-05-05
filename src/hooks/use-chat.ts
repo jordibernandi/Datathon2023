@@ -42,7 +42,6 @@ export function useChat() {
    */
 
   function clear() {
-    console.log("clear");
     setChatHistory([]);
     setCurrentChat(null);
   }
