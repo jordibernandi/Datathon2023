@@ -104,14 +104,14 @@ export default function Index() {
           <div className="flex flex-col space-y-4">
             {chatHistory.length === 0 ? (
               <>
-                {/* <div className="w-24">{View}</div> */}
+                <div className="w-40 text-center">{View}</div>
                 <Welcome />
               </>
             ) : (
               chatHistory.map((chat, i) => {
                 if (chat.show) {
                   return (
-                    <ChatMessage key={i} message={chat} robot={View} />
+                    <ChatMessage key={i} message={chat} />
                   )
                 } else {
                   return <></>
@@ -119,7 +119,7 @@ export default function Index() {
               })
             )}
 
-            {currentChat ? <ChatMessage message={currentMessage} robot={View} /> : null}
+            {currentChat ? <ChatMessage message={currentMessage} /> : null}
           </div>
 
           <div ref={bottomRef} />
