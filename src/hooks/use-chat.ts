@@ -127,7 +127,7 @@ export function useChat() {
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
               setCurrentChat(null);
-              if (chatContent.toLowerCase().includes("true")) {
+              if (chatContent.toLowerCase().includes("true") && !chatContent.toLowerCase().includes("false")) {
                 setState("extracting");
               } else {
                 setState("asking");
