@@ -236,5 +236,5 @@ export function useChat() {
     });
   };
 
-  return { sendMessage, currentChat, chatHistory, cancel, clear, state };
+  return { sendMessage, setCurrentChat, currentChat, chatHistory, cancel, clear, state };
 }
