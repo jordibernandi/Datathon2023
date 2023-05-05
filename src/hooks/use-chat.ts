@@ -71,10 +71,10 @@ export function useChat() {
       body,
       method: "POST",
       signal: abortController.signal,
-      // onclose: () => {
-      //   console.log("onClose")
-      //   setState("idle");
-      // },
+      onclose: () => {
+        console.log("onClose")
+        // setState("idle");
+      },
       onmessage: (event) => {
         setCurrentChat("...");
         if (state === "idle") {
