@@ -40,17 +40,22 @@ export default function Index() {
 
   useEffect(() => {
     focusInput();
+    console.log("STATE", state)
+    console.log("HISTORY", chatHistory)
     if (state === "idle") {
       console.log(currentChat);
     } else if (state === "confirming") {
       const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
-      sendMessage("Output 'true' if there is any symptom mentioned in this text: " + latestUserChat.content, chatHistory);
+      const message = "Output 'true' if there is any symptom mentioned in this text: " + latestUserChat.content;
+      sendMessage(message, chatHistory);
     } else if (state === "extracting") {
       const secondLatestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-2, -1).pop();
-      sendMessage("Extract the symptoms as a list tag in the following text: " + secondLatestUserChat.content, chatHistory);
+      const message = "Extract the symptoms as a list tag in the following text: " + secondLatestUserChat.content;
+      sendMessage(message, chatHistory);
     } else if (state === "asking") {
       const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-2, -1).pop();
-      sendMessage("Rephrase this question in the formal way: " + secondLatestAssistantChat + " Could you please describe more about your symptoms?", chatHistory);
+      const message = "Rephrase this question in the formal way: " + secondLatestAssistantChat + " Could you please describe more about your symptoms?";
+      sendMessage(message, chatHistory);
     } else if (state === "typing") {
       fetch("http://127.0.0.1:5000/receiver",
         {
@@ -71,7 +76,6 @@ export default function Index() {
           sendMessage("Summarize this: " + jsonResponse, chatHistory);
         }).catch((err) => console.error(err));
     }
-    console.log("STATE", state)
   }, [state]);
 
   return (
