@@ -67,12 +67,9 @@ export default function Index() {
             alert("something is wrong")
           }
         }).then(jsonResponse => {
-
-          // Log the response data in the console
           console.log(jsonResponse)
-        }
-        ).catch((err) => console.error(err));
-
+          sendMessage("Summarize this: " + jsonResponse, chatHistory);
+        }).catch((err) => console.error(err));
     }
     console.log("STATE", state)
   }, [state]);
