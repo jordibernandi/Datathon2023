@@ -51,6 +51,28 @@ export default function Index() {
     } else if (state === "asking") {
       const secondLatestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-2, -1).pop();
       sendMessage("Rephrase this question in the formal way: " + secondLatestAssistantChat + " Could you please describe more about your symptoms?", chatHistory);
+    } else if (state === "typing") {
+      fetch("http://127.0.0.1:5000/receiver",
+        {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify("Netlify is a hosting service for the programmable web. It understands your documents and provides an API to handle atomic deploys of websites, manage form submissions, inject JavaScript snippets, and much more. This is a REST-style API that uses JSON for serialization and OAuth 2 for authentication.")
+        }).then(res => {
+          if (res.ok) {
+            return res.json()
+          } else {
+            alert("something is wrong")
+          }
+        }).then(jsonResponse => {
+
+          // Log the response data in the console
+          console.log(jsonResponse)
+        }
+        ).catch((err) => console.error(err));
+
     }
     console.log("STATE", state)
   }, [state]);
