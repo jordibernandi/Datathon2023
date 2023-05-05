@@ -75,6 +75,7 @@ export default function Index() {
       sendMessage(message, chatHistory);
     } else if (state === "typing") {
       const latestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[0];
+      const secondAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-2, -1).pop();
       fetch("http://127.0.0.1:5000/receiver",
         {
           method: 'POST',
@@ -82,7 +83,7 @@ export default function Index() {
             'Content-type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify(latestAssistantChat.content)
+          body: JSON.stringify(secondAssistantChat.content + latestAssistantChat.content)
         }).then(res => {
           if (res.ok) {
             return res.json()
