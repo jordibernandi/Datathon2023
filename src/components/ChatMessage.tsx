@@ -37,7 +37,7 @@ const CustomTable: FunctionComponent<
  */
 
 export const ChatMessage: React.FC<React.PropsWithChildren<Props>> = ({
-  message
+  message, robot
 }) =>
   message.role === "user" ? (
     <div className="flex items-end justify-end">
@@ -56,5 +56,6 @@ export const ChatMessage: React.FC<React.PropsWithChildren<Props>> = ({
           }}
         />
       </div>
+      <div className="w-24">{robot}</div>
     </div>
   );
