@@ -76,7 +76,6 @@ export function useChat() {
       //   setState("idle");
       // },
       onmessage: (event) => {
-        console.log("sendMessage");
         setCurrentChat("...");
         if (state === "idle") {
           switch (event.event) {
@@ -99,7 +98,7 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-              setCurrentChat(null);
+              // setCurrentChat(null);
               setState("confirming");
             }
             default:
@@ -126,8 +125,8 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-              setCurrentChat(null);
-              if (chatContent.toLowerCase().includes("true") && !chatContent.toLowerCase().includes("false")) {
+              // setCurrentChat(null);
+              if (chatContent.toLowerCase().includes("true") && !chatContent.toLowerCase().includes("false") && !chatContent.toLowerCase().includes("sorry")) {
                 setState("extracting");
               } else {
                 setState("asking");
@@ -157,7 +156,7 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
-              setCurrentChat(null);
+              // setCurrentChat(null);
               setState("typing");
             }
             default:
@@ -185,7 +184,7 @@ export function useChat() {
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
-              setCurrentChat(null);
+              // setCurrentChat(null);
               setState("idle");
             }
             case "open": {
