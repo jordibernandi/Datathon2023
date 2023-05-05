@@ -103,7 +103,7 @@ export default function Index() {
           <div className="flex flex-col space-y-4">
             {chatHistory.length === 0 ? (
               <>
-                <>{View}</>;
+                <div className="w-24">{View}</div>;
                 <Welcome />
               </>
             ) : (
