@@ -92,6 +92,7 @@ export function useChat() {
               break;
             }
             case "done": {
+              console.log("done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -150,6 +151,7 @@ export function useChat() {
               break;
             }
             case "done": {
+              console.log("done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -178,6 +180,7 @@ export function useChat() {
               break;
             }
             case "done": {
+              console.log("done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -218,6 +221,7 @@ export function useChat() {
               break;
             }
             case "done": {
+              console.log("done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
