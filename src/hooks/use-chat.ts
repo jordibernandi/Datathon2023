@@ -92,7 +92,7 @@ export function useChat() {
               break;
             }
             case "done": {
-              console.log("done")
+              console.log("idle done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -120,6 +120,7 @@ export function useChat() {
               break;
             }
             case "done": {
+              console.log("confirming done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -151,7 +152,7 @@ export function useChat() {
               break;
             }
             case "done": {
-              console.log("done")
+              console.log("extracting done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -180,7 +181,7 @@ export function useChat() {
               break;
             }
             case "done": {
-              console.log("done")
+              console.log("asking done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
@@ -221,7 +222,7 @@ export function useChat() {
               break;
             }
             case "done": {
-              console.log("done")
+              console.log("typing done")
               // When it's done, we add the message to the history
               // and reset the current chat
               setChatHistory((curr) => [
