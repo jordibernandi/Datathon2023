@@ -74,7 +74,7 @@ export default function Index() {
           }
         }).then(jsonResponse => {
           console.log(jsonResponse)
-          sendMessage("Summarize this: " + jsonResponse, chatHistory);
+          sendMessage("Make an advise with this information: " + jsonResponse, chatHistory);
         }).catch((err) => console.error(err));
     }
   }, [state]);

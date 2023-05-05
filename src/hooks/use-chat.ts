@@ -50,7 +50,7 @@ export function useChat() {
    * Sends a new message to the AI function and streams the response
    */
   const sendMessage = (message: string, chatHistory: Array<ChatMessage>) => {
-    console.log("sendMessage")
+    console.log("Sending message...")
     let chatContent = "";
     const newHistory = [
       ...chatHistory,
