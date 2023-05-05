@@ -63,28 +63,6 @@ export default function Index() {
             {chatHistory.length === 0 ? (
               <>
                 <Welcome />
-                {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {appConfig.samplePhrases.map((phrase) => (
-                    <button
-                      key={phrase}
-                      onClick={() => sendMessage(phrase, chatHistory)}
-                      className="p-4 bg-gray-100 border-2 border-gray-300 rounded-lg"
-                    >
-                      {phrase}
-                    </button>
-                  ))}
-                </div>
-                <div className="flex justify-center">
-                  <p className="mt-5 text-sm text-gray-500">
-                    Built with 🤖{" "}
-                    <a
-                      className="underline"
-                      href="https://github.com/ascorbic/daneel"
-                    >
-                      Daneel
-                    </a>
-                  </p>
-                </div> */}
               </>
             ) : (
               chatHistory.map((chat, i) => (

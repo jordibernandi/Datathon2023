@@ -187,7 +187,6 @@ export function useChat() {
               ]);
               setCurrentChat(null);
               setState("idle");
-              console.log("DONE")
             }
             case "open": {
               // The stream has opened and we should recieve
