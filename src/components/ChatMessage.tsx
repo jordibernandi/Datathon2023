@@ -6,9 +6,6 @@ import {
 import ReactMarkdown from "react-markdown";
 import { ReactMarkdownProps } from "react-markdown/lib/complex-types";
 import remarkGfm from "remark-gfm";
-import Lottie from 'react-lottie';
-import animationData from '../assets/green-robot.json';
-
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -16,15 +13,6 @@ interface ChatMessage {
 interface Props {
   message: ChatMessage;
 }
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: animationData,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice"
-  }
-};
 
 // This lets us style any markdown tables that are rendered
 const CustomTable: FunctionComponent<
@@ -49,7 +37,7 @@ const CustomTable: FunctionComponent<
  */
 
 export const ChatMessage: React.FC<React.PropsWithChildren<Props>> = ({
-  message,
+  message
 }) =>
   message.role === "user" ? (
     <div className="flex items-end justify-end">
@@ -68,10 +56,5 @@ export const ChatMessage: React.FC<React.PropsWithChildren<Props>> = ({
           }}
         />
       </div>
-      <Lottie
-        options={defaultOptions}
-        height={400}
-        width={400}
-      />
     </div>
   );

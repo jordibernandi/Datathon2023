@@ -4,8 +4,21 @@ import { useChat } from "../hooks/use-chat";
 import { ChatMessage } from "../components/ChatMessage";
 import { appConfig } from "../../config.browser";
 import { Welcome } from "../components/Welcome";
+import { useLottie } from 'lottie-react';
+import animationData from '../assets/green-robot.json';
 
 export default function Index() {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
+  const { View } = useLottie(defaultOptions);
+
   // The content of the box where the user is typing
   const [message, setMessage] = useState<string>("");
 
@@ -90,6 +103,7 @@ export default function Index() {
           <div className="flex flex-col space-y-4">
             {chatHistory.length === 0 ? (
               <>
+                <>{View}</>;
                 <Welcome />
               </>
             ) : (
