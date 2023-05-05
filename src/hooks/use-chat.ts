@@ -180,11 +180,11 @@ export function useChat() {
             case "done": {
               // When it's done, we add the message to the history
               // and reset the current chat
-              setCurrentChat(null);
               setChatHistory((curr) => [
                 ...curr,
                 { role: "assistant", content: chatContent, show: true } as const,
               ]);
+              setCurrentChat(null);
               setState("idle");
             }
             case "open": {

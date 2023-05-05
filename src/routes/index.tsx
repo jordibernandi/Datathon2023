@@ -56,6 +56,7 @@ export default function Index() {
       const message = "Rephrase this question in the formal way: " + secondLatestAssistantChat.content + " Could you please describe more about your symptoms?";
       sendMessage(message, chatHistory);
     } else if (state === "typing") {
+      const latestAssistantChat = chatHistory.filter(obj => obj.role === "assistant").slice(-1)[0];
       fetch("http://127.0.0.1:5000/receiver",
         {
           method: 'POST',
@@ -63,7 +64,7 @@ export default function Index() {
             'Content-type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify("Netlify is a hosting service for the programmable web. It understands your documents and provides an API to handle atomic deploys of websites, manage form submissions, inject JavaScript snippets, and much more. This is a REST-style API that uses JSON for serialization and OAuth 2 for authentication.")
+          body: JSON.stringify(latestAssistantChat.content)
         }).then(res => {
           if (res.ok) {
             return res.json()
