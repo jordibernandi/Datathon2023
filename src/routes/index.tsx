@@ -83,7 +83,7 @@ export default function Index() {
             'Content-type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify(secondAssistantChat.content + latestAssistantChat.content)
+          body: JSON.stringify(secondAssistantChat.content + " " + latestAssistantChat.content)
         }).then(res => {
           if (res.ok) {
             return res.json()
