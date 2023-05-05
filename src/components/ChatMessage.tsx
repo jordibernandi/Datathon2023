@@ -6,6 +6,8 @@ import {
 import ReactMarkdown from "react-markdown";
 import { ReactMarkdownProps } from "react-markdown/lib/complex-types";
 import remarkGfm from "remark-gfm";
+import Lottie from 'react-lottie';
+import animationData from '../assets/green-robot.json';
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -15,13 +17,22 @@ interface Props {
   message: ChatMessage;
 }
 
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice"
+  }
+};
+
 // This lets us style any markdown tables that are rendered
 const CustomTable: FunctionComponent<
   Omit<
     DetailedHTMLProps<TableHTMLAttributes<HTMLTableElement>, HTMLTableElement>,
     "ref"
   > &
-    ReactMarkdownProps
+  ReactMarkdownProps
 > = ({ children, ...props }) => {
   return (
     <div className="overflow-x-auto">
@@ -42,13 +53,13 @@ export const ChatMessage: React.FC<React.PropsWithChildren<Props>> = ({
 }) =>
   message.role === "user" ? (
     <div className="flex items-end justify-end">
-      <div className="bg-gray-300 border-gray-100 border-2 rounded-lg p-2 max-w-lg">
+      <div className="max-w-lg p-2 bg-gray-300 border-2 border-gray-100 rounded-lg">
         <p>{message.content}</p>
       </div>
     </div>
   ) : (
     <div className="flex items-end">
-      <div className="bg-gray-100 border-gray-300 border-2 rounded-lg p-2 mr-20 w-full">
+      <div className="w-full p-2 mr-20 bg-gray-100 border-2 border-gray-300 rounded-lg">
         <ReactMarkdown
           children={message.content}
           remarkPlugins={[remarkGfm]}
@@ -57,5 +68,10 @@ export const ChatMessage: React.FC<React.PropsWithChildren<Props>> = ({
           }}
         />
       </div>
+      <Lottie
+        options={defaultOptions}
+        height={400}
+        width={400}
+      />
     </div>
   );

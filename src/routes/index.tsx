@@ -44,6 +44,10 @@ export default function Index() {
     console.log("HISTORY", chatHistory)
     if (state === "idle") {
       setCurrentChat(null);
+    } else if (state === "summarizing") {
+      const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
+      const message = "Summarize the symptoms this text if there is any: " + latestUserChat.content;
+      sendMessage(message, chatHistory);
     } else if (state === "confirming") {
       const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
       const message = "Output 'true' if there is any symptom mentioned in this text: " + latestUserChat.content;

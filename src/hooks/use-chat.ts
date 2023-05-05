@@ -15,7 +15,7 @@ interface ChatMessage {
 export function useChat() {
   const [currentChat, setCurrentChat] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
-  const [state, setState] = useState<"idle" | "confirming" | "extracting" | "asking" | "typing">("idle");
+  const [state, setState] = useState<"idle" | "summarizing" | "confirming" | "extracting" | "asking" | "typing">("idle");
 
   // Lets us cancel the stream
   const abortController = useMemo(() => new AbortController(), []);
@@ -100,7 +100,35 @@ export function useChat() {
                 { role: "assistant", content: chatContent, show: false } as const,
               ]);
               // setCurrentChat(null);
-              setState("confirming");
+              setState("summarizing");
+            }
+            default:
+              break;
+          }
+        } else if (state === "summarizing") {
+          switch (event.event) {
+            case "delta": {
+              // This is a new word or chunk from the AI
+              const message = JSON.parse(event.data);
+              if (message?.role === "assistant") {
+                chatContent = "";
+                return;
+              }
+              if (message.content) {
+                chatContent += message.content;
+              }
+              break;
+            }
+            case "done": {
+              console.log("summarizing done")
+              // When it's done, we add the message to the history
+              // and reset the current chat
+              setChatHistory((curr) => [
+                ...curr,
+                { role: "assistant", content: chatContent, show: false } as const,
+              ]);
+              // setCurrentChat(null);
+              setState("typing");
             }
             default:
               break;
