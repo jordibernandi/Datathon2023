@@ -59,7 +59,7 @@ export default function Index() {
       setCurrentChat(null);
     } else if (state === "summarizing") {
       const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
-      const message = "Summarize the symptoms this text if there is any: " + latestUserChat.content;
+      const message = "Summarize the symptoms this text: " + latestUserChat.content;
       sendMessage(message, chatHistory);
     } else if (state === "confirming") {
       const latestUserChat = chatHistory.filter(obj => obj.role === "user").slice(-1)[0];
@@ -91,7 +91,7 @@ export default function Index() {
           }
         }).then(jsonResponse => {
           console.log(jsonResponse)
-          sendMessage("Provide more information and some advises about " + jsonResponse, chatHistory);
+          sendMessage(jsonResponse, chatHistory);
         }).catch((err) => console.error(err));
     }
   }, [state]);
@@ -103,7 +103,7 @@ export default function Index() {
           <div className="flex flex-col space-y-4">
             {chatHistory.length === 0 ? (
               <>
-                <div className="w-24">{View}</div>;
+                <div className="w-24">{View}</div>
                 <Welcome />
               </>
             ) : (
